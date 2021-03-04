@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  api:
+    env_file:
+        "./api/.env"
+    build:
+      context: api
+      dockerfile: api.dockerfile
+    image: "login-page-backend:latest"
+    ports:
+      - "9000:9000"
+  login-page:
+    build:
+      context: login-page
+      dockerfile: login-page.dockerfile
+    image: "login-page-frontend:latest"
+    ports:
+      - "3000:3000"
