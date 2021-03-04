@@ -63,11 +63,11 @@ app.post('/auth', function(req, res){
 
   console.log(hashedPassword);
 
-  db.query("SELECT * FROM Teachers WHERE email = ?",  [email], function (err, result) {
+  db.query("SELECT * FROM Users WHERE email = ?",  [email], function (err, result) {
     if (result.length > 0) {
       return res.redirect('http://localhost:3000/!register');
     } else {
-      db.query("INSERT INTO Teachers SET ?", {teacher_name: name, email: email, password: hashedPassword}, function (err, result) {
+      db.query("INSERT INTO Users SET ?", {user_name: name, email: email, password: hashedPassword}, function (err, result) {
         if (err) throw err;
         return res.redirect('http://localhost:3000/registered');
       });
@@ -82,7 +82,7 @@ app.post('/login', function(req, res){
 
     console.log(email, password);
 
-    db.query("SELECT * FROM Teachers WHERE email = ?",  [email], function (error, result) {
+    db.query("SELECT * FROM Users WHERE email = ?",  [email], function (error, result) {
       console.log(result)
       if (result.length == 0 || !(bcrypt.compareSync(password, result[0].password))){
         res.status(401).redirect("http://localhost:3000/error")
